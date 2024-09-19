@@ -1,0 +1,31 @@
+﻿@page "/image"
+@rendermode InteractiveServer
+
+@inject TestApiClient TestApi
+@inject IJSRuntime JS
+
+<PageTitle>Show Image</PageTitle>
+
+<h1> Image Example </h1>
+
+<button class="btn btn-primary" @onclick="SetImageAsync">
+    Set Image
+</button>
+
+<div class="p-3">
+    <img id="my-image" height="200"/>
+</div>
+
+@code {
+    // protected override async Task OnInitializedAsync()
+    // {
+    //     await TestApi.GetBlobStreamAsync();
+    // }
+
+    private async Task SetImageAsync()
+    {
+        var imageStream = await TestApi.GetBlobStreamAsync();
+        var strRef = new DotNetStreamReference(imageStream);
+        await JS.InvokeVoidAsync("setSource", "my-image", strRef, "image/jpg", "image sample");
+    }
+}

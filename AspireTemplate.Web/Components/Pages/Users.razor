@@ -1,0 +1,34 @@
+﻿@page "/users" 
+@using AspireTemplate.Web.Mocks
+
+<h1> Users </h1>
+
+<RadzenDataGrid 
+    AllowFiltering="true" 
+    AllowColumnResize="true"
+    AllowAlternatingRows="false"
+    FilterMode="FilterMode.Advanced"
+    AllowSorting="true"
+    PageSize="5" 
+    AllowPaging="true" 
+    PagerHorizontalAlign="HorizontalAlign.Left" 
+    ShowPagingSummary="true"
+    Data="@users"
+    ColumnWidth="300px"
+    LogicalFilterOperator="LogicalFilterOperator.Or"
+    SelectionMode="DataGridSelectionMode.Single"
+    @bind-Value=@selectedUsers>
+    <Columns>
+        <RadzenDataGridColumn Property="@nameof(User.UserId)" Filterable="false" Title="ID" Frozen="true" Width="80px" TextAlign="TextAlign.Center" />
+        <RadzenDataGridColumn Property="@nameof(User.Name)" Title="Name" Frozen="true" Width="160px" />
+        <RadzenDataGridColumn Property="@nameof(User.Title)" Title="Title" Frozen="true" Width="160px" />
+        <RadzenDataGridColumn Property="@nameof(User.Date)" Title="Date" Frozen="true" FormatString="{0:d}" Width="160px"/>
+    </Columns>
+</RadzenDataGrid>
+
+@code {
+    // use IQueryable if api is setup
+    // IQueryable<User> users = new List<User>();
+    IList<User> users = MockUsers.Users;
+    IList<User>? selectedUsers;
+}
